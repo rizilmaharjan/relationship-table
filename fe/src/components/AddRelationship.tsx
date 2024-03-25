@@ -33,18 +33,17 @@ export default function AddRelationship({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("this is edit id", editId);
     try {
       if (isEdit) {
         await Instance.put(`/v1/user/${editId}`, relationshipData);
         setRelationData((prev) => {
-          if (!prev) return []; // Return null if prev is null
+          if (!prev) return [];
           return prev.map((item) => {
             if (item.id === editId) {
-              return { ...item, ...relationshipData }; // Update the item with matching id
+              return { ...item, ...relationshipData };
             }
             return item;
-          }) as TRelationData[]; // Assert the type of the returned array as TRelationData[]
+          }) as TRelationData[];
         });
       } else {
         const res = await Instance.post("/v1/user", relationshipData);

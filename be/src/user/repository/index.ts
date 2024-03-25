@@ -22,9 +22,9 @@ export const postUser = async (
     const connection = await OracleDB.getConnection(oracleConfig);
 
     const sql = `
-    INSERT INTO RELATIONSHIP (RELATION_CD, RELATION_ENG, RELATION_NEPALI)
+    INSERT INTO RELATIONSHIP (RELATION_CD, RELATION_Eng, RELATION_Nepali)
     VALUES (:Relation_CD, :Relation_Eng, :Relation_Nepali)
-    RETURNING ID, RELATION_CD, RELATION_ENG, RELATION_NEPALI INTO :new_id, :new_cd, :new_eng, :new_nepali
+    RETURNING ID, RELATION_CD, RELATION_Eng, RELATION_Nepali INTO :new_id, :new_cd, :new_eng, :new_nepali
   `;
 
     // Pass bind variables with necessary attributes
@@ -44,7 +44,7 @@ export const postUser = async (
     const insertedData = {
       id: (result.outBinds?.new_id && result.outBinds.new_id[0]) || -1,
       Relation_CD: (result.outBinds?.new_cd && result.outBinds.new_cd[0]) || "",
-      Relation_ENG:
+      Relation_Eng:
         (result.outBinds?.new_eng && result.outBinds.new_eng[0]) || "",
       Relation_Nepali:
         (result.outBinds?.new_nepali && result.outBinds.new_nepali[0]) || "",
@@ -104,7 +104,6 @@ export const updateUser = async (
   message: string;
 }> => {
   const userId = Number(id);
-  console.log(typeof userId);
   try {
     const connection = await OracleDB.getConnection(oracleConfig);
     const sql = `UPDATE RELATIONSHIP SET Relation_CD = :Relation_CD, Relation_Eng = :Relation_Eng, Relation_Nepali = :Relation_Nepali WHERE id = :id`;
